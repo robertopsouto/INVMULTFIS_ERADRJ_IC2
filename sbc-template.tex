@@ -49,30 +49,47 @@ Universidade Católica de Petrópolis (UCP)\\
 
 \section{Introdução}
 
-\section{CSEM} \label{sec:firstpage}
+\subsection{CSEM} \label{sec:firstpage}
+Métodos Eletromagnéticos de Fonte Controlada (CSEM) é uma técnica geofísica usada para explorar o subsolo da Terra em busca de reservas de petróleo e gás, bem como de outros recursos minerais.
 
-\section{Processamento Paralelo}
+A técnica envolve o uso de uma fonte eletromagnética para produzir um sinal de baixa frequência, que é então detectado por sensores colocados no fundo do mar ou em terra. O sinal pode penetrar nas camadas da Terra e interagir com qualquer material condutor, como rochas contendo hidrocarbonetos, criando um campo eletromagnético secundário que é medido pelos sensores.
+
+Ao analisar a resposta do campo secundário, os geofísicos podem criar um modelo 3D da subsuperfície, que pode ser usado para identificar a localização e o tamanho de potenciais reservas de hidrocarbonetos e outras características geológicas.
+
+O CSEM é particularmente útil para exploração em áreas offshore, onde os métodos sísmicos podem ser menos eficazes devido à presença de hidratos de gás ou outros fatores. No entanto, também pode ser usado com outras técnicas geofísicas, como levantamentos sísmicos, para fornecer uma compreensão mais abrangente da subsuperfície.
+
+\section{Metodologia}
+
 \subsection{HPCToolkit}
+HPCToolkit é um conjunto de ferramentas de análise de desempenho de código-fonte aberto projetado para ajudar os desenvolvedores a entender e otimizar o desempenho de seus aplicativos em sistemas de computação de alto desempenho (HPC, do termo em inglês High-Performance Computing), e fornece uma ampla gama de recursos para análise de desempenho, incluindo-se:
+\begin{itemize}
+ \item Coleta de dados de desempenho: o HPCToolkit pode coletar dados de desempenho durante a execução do programa, incluindo informações sobre o tempo de CPU, eventos de hardware, alocação de memória e outros dados relevantes para a análise de desempenho.
+  \item Análise de dados: o HPCToolkit pode analisar os dados de desempenho coletados para identificar gargalos de desempenho e oportunidades de otimização.
+ \item Visualização de dados: o HPCToolkit pode visualizar os dados de desempenho coletados em vários formatos.
+\end{itemize}
+O HPCToolkit suporta várias linguagens de programação, tais como C, C++ e Fortran, e é compatível com diferenes arquiteturas de hardware, como CPUs, GPUs e clusters de computadores.
 
 \section{Resultados}
 
+\subsection{Estudo de caso}
+\subsection{Recursos computacionais}
 \begin{figure}
 \centering
-\includegraphics[width=.8\textwidth]{figures/openmpi/Nodes1_MPI12.png}
+\includegraphics[width=.5\textwidth]{figures/openmpi/Nodes1_MPI12.png}\includegraphics[width=.5\textwidth]{figures/openmpi/Nodes16_MPI384.png}
 \caption{HPCToolkit.}
 \label{fig:nodes1mpi12}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=.8\textwidth]{figures/openmpi/Nodes16_MPI384.png}
-\caption{HPCToolkit.}
-\label{fig:nodes16mpi384}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics[width=.5\textwidth]{figures/openmpi/Nodes16_MPI384.png}
+% \caption{HPCToolkit.}
+% \label{fig:nodes16mpi384}
+% \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=.7\textwidth]{figures/openmpi/desempenho.png}
+\includegraphics[width=.5\textwidth]{figures/openmpi/desempenho.png}
 \caption{Desempenho}
 \label{fig:desempenho}
 \end{figure}
