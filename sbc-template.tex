@@ -29,80 +29,60 @@ Universidade Católica de Petrópolis (UCP)\\
 \maketitle
 
 \begin{abstract}
-  This meta-paper describes the style to be used in articles and short papers
-  for SBC conferences. For papers in English, you should add just an abstract
-  while for the papers in Portuguese, we also ask for an abstract in
-  Portuguese (``resumo''). In both cases, abstracts should not have more than
-  10 lines and must be in the first page of the paper.
+Parallel performance profiles were obtained for one implementation of the CSEM 3D method, which is a geophysical technique used to locate oil reserves on the seabed. A routine from the PETSC library dominates the total execution time, making its efficient parallel execution result in good gain in the overall application time.
 \end{abstract}
      
 \begin{resumo} 
-  Este meta-artigo descreve o estilo a ser usado na confecção de artigos e
-  resumos de artigos para publicação nos anais das conferências organizadas
-  pela SBC. É solicitada a escrita de resumo e abstract apenas para os artigos
-  escritos em português. Artigos em inglês deverão apresentar apenas abstract.
-  Nos dois casos, o autor deve tomar cuidado para que o resumo (e o abstract)
-  não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
-  página do artigo.
+Perfis de desempenho paralelos foram obtidos para uma implementação do método CSEM 3D, que é uma técnica geofísica usada para localizar reservas de petróleo no fundo do mar. Uma rotina da biblioteca PETSC domina o tempo total de execução, fazendo com que sua execução paralela eficiente resulte em um bom ganho no tempo geral da aplicação. 
 \end{resumo}
 
 
 \section{Introdução}
+\label{sec:intro}
+%
+Neste trabalho é apresentado um estudo do perfil de desempenho paralelo realizado no supercomputador Santos Dumont, de uma implementação do método CSEM-Controlled-Source Electromagnetic (método Eletromagnético de Fonte Controlada, em tradução livre)\cite{zerilli2014broadband,zerilli2016broadband}, que consiste em uma técnica geofísica usada para explorar o subsolo em busca de reservas de petróleo e gás, bem como de outros recursos minerais. A técnica envolve o uso de uma fonte eletromagnética para produzir um sinal de baixa frequência, que é então detectado por sensores colocados no fundo do mar. O sinal pode penetrar nas camadas do solo e interagir com qualquer material condutor, como rochas contendo hidrocarbonetos, criando um campo eletromagnético secundário que é medido pelos sensores. Ao analisar a resposta do campo secundário, pode-se criar um modelo 3D da subsolo, a ser usado para identificar a localização e o tamanho de potenciais reservas de hidrocarbonetos e outras características geológicas.
 
-%\subsection{CSEM} \label{sec:firstpage}
-Métodos Eletromagnéticos de Fonte Controlada (CSEM) é uma técnica geofísica usada para explorar o subsolo da Terra em busca de reservas de petróleo e gás, bem como de outros recursos minerais.
-
-A técnica envolve o uso de uma fonte eletromagnética para produzir um sinal de baixa frequência, que é então detectado por sensores colocados no fundo do mar ou em terra. O sinal pode penetrar nas camadas da Terra e interagir com qualquer material condutor, como rochas contendo hidrocarbonetos, criando um campo eletromagnético secundário que é medido pelos sensores.
-
-Ao analisar a resposta do campo secundário, os geofísicos podem criar um modelo 3D da subsuperfície, que pode ser usado para identificar a localização e o tamanho de potenciais reservas de hidrocarbonetos e outras características geológicas.
-
-O CSEM é particularmente útil para exploração em áreas offshore, onde os métodos sísmicos podem ser menos eficazes devido à presença de hidratos de gás ou outros fatores. No entanto, também pode ser usado com outras técnicas geofísicas, como levantamentos sísmicos, para fornecer uma compreensão mais abrangente da subsuperfície.
-
-%\section{Metodologia}
-
-%\subsection{HPCToolkit}
-HPCToolkit~\cite{hpctoolkit2010} é um conjunto de ferramentas de análise de desempenho de código-fonte aberto projetado para ajudar os desenvolvedores a entender e otimizar o desempenho de seus aplicativos em sistemas de computação de alto desempenho (HPC, do termo em inglês High-Performance Computing), e fornece uma ampla gama de recursos para análise de desempenho, incluindo-se:
+\section{Metodologia}
+\label{sec:metodo}
+%
+A fim de obter o perfil de desempenho do CSEM 3D, foram realizadas execuções paralelas no supercomputador Santos Dumont variando-se de 12 até 384 processos MPI, usando OpenMPI v4.1.2 instalado com compilador GNU v9.3, rodado sob o pacote HPCToolkit~\cite{hpctoolkit2010}, que é um conjunto de ferramentas com código-fonte aberto para análise de desempenho, projetado para ajudar os desenvolvedores a entender e otimizar o desempenho de aplicações em sistemas de computação de alto desempenho (HPC, do termo em inglês High-Performance Computing). O HPCToolkit suporta várias linguagens de programação, tais como C, C++ e Fortran, e é compatível com diferentes arquiteturas de hardware, como CPUs, GPUs e clusters de computadores, fornecendo diversos recursos para análise de desempenho, incluindo-se:
 \begin{itemize}
- \item Coleta de dados de desempenho: o HPCToolkit pode coletar dados de desempenho durante a execução do programa, incluindo informações sobre o tempo de CPU, eventos de hardware, alocação de memória e outros dados relevantes para a análise de desempenho.
-  \item Análise de dados: o HPCToolkit pode analisar os dados de desempenho coletados para identificar gargalos de desempenho e oportunidades de otimização.
- \item Visualização de dados: o HPCToolkit pode visualizar os dados de desempenho coletados em vários formatos.
+ \item \underline{Coleta de dados de desempenho} visando obter informações sobre o tempo de CPU, eventos de hardware, alocação de memória e outros dados relevantes para a análise de desempenho.
+  \item \underline{Análise de dados} para identificação dos gargalos de desempenho e oportunidades de otimização.
+ \item \underline{Visualização do dados} de desempenho coletados em vários formatos.
 \end{itemize}
-O HPCToolkit suporta várias linguagens de programação, tais como C, C++ e Fortran, e é compatível com diferenes arquiteturas de hardware, como CPUs, GPUs e clusters de computadores.
 
-\section{Resultados}
+\section{Resultados}              
+\label{sec:resultados}
+Na Figura~\ref{fig:nodesresults} é mostrada a saída da visualização de execução paralela, respectivamente com 12 \textbf{(a)} e 384 \textbf{(b)} processos MPI. A cor azul escuro é referente ao processamento da rotina {\ttfamily \textbf{kspsolve}}, da biblioteca científica PETSC v3.18.4\cite{petsc-web-page,petsc-efficient}, que corresponde a cerca de 89\% do tempo total de execução paralela com 12 processos MPI. No entanto, com o uso de 384 processos MPI, a contribuição desta rotina da PETSC reduz-se para 35.3\%, devido justamente a boa redução de tempo alcançada pelo processamento paralelo, conforme verifica-se nas curvas de desempenho presentes na Figura~\ref{fig:desempenho}. 
 
-\subsection{Estudo de caso}
-\subsection{Recursos computacionais}
-\begin{figure}
+%\subsection{Recursos computacionais}
+\begin{figure}[hb]
 \centering
-\includegraphics[width=.5\textwidth]{figures/openmpi/Nodes1_MPI12.png}\includegraphics[width=.5\textwidth]{figures/openmpi/Nodes16_MPI384.png}
-\caption{HPCToolkit.}
-\label{fig:nodes1mpi12}
+\begin{tabular}{cc}
+\includegraphics[width=.5\textwidth]{figures/openmpi/Nodes1_MPI12.png} & \includegraphics[width=.5\textwidth]{figures/openmpi/Nodes16_MPI384.png} \\
+ \textbf{(a)} & \textbf{(b)} 
+\end{tabular}
+\caption{Perfis de desempenho paralelo do código CSEM 3D obtidos com o pacote HPCToolkit: com 12 \textbf{(a)} e 384 \textbf{(b)} processos MPI.}
+\label{fig:nodesresults}
 \end{figure}
 
-% \begin{figure}
-% \centering
-% \includegraphics[width=.5\textwidth]{figures/openmpi/Nodes16_MPI384.png}
-% \caption{HPCToolkit.}
-% \label{fig:nodes16mpi384}
-% \end{figure}
+Nota-se que praticamente toda a redução do tempo total de execução é devido ao ganho de processamento obtido pela execução paralela da rotina {\ttfamily \textbf{kspsolve}}. Portanto, é natural que a contribuição desta rotina seja proporcionalmente menor, conforme aumenta-se o número de processos MPI.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=.5\textwidth]{figures/openmpi/desempenho.png}
-\caption{Desempenho}
+\caption{Curvas de desempenho paralelo de CSEM 3D (linha cheia) e somente da rotina {\ttfamily \textbf{kspsolve}} (linha tracejada) da PETSC. }
 \label{fig:desempenho}
 \end{figure}
 
 
+\section{Comentários}
+Foi apresentado um resultado inicial do desempenho paralelo do código que implementa o método CSEM 3D, onde praticamente todo ganho é obtido por uma rotina da biblioteca PETSC. Como um dos próximos passos da pesquisa, será avaliada a possibilidade de utilizar rotina da PETSC já adaptada para uso de GPU~\cite{MILLS2021}, com o quê pretende-se atingir um ganho ainda maior de desempenho.
 
-
-\section{Comentários Finais}
-
-
-\section{Agradecimentos}
-os autores agradecem ao Laboratório Nacional de Computação Científica (LNCC/MCTI) por fornecer recursos HPC do supercomputador SDumont, que contribuíram para os resultados da pesquisa relatados neste artigo. URL: http://sdumont.lncc.br
-\section{References}
+\section*{Agradecimentos}
+Os autores agradecem a Petróleo Brasileiro S.A. pelo apoio à pesquisa por meio do Termo de Colaboração número 0050.0121778.22.9. Os autores também agradecem ao Laboratório Nacional de Computação Científica (LNCC/MCTI) por fornecer recursos do supercomputador SDumont, que contribuíram para os resultados da pesquisa relatados neste artigo. \textbf{\url{http://sdumont.lncc.br}}.
+%\section{References}
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
