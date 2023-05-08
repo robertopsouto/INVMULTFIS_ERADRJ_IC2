@@ -11,17 +11,21 @@
 
 \title{Perfil de desempenho e oportunidades de otimização da implementação do método CSEM 3D}
 
-\author{Rômulo T. Lima\inst{1,2}, Mateus F. Lima de Souza\inst{1,3}}
+\author{Mateus F. Lima de Souza\inst{1,2}, Rômulo T. Lima\inst{1,3}, Roberto P. Souto\inst{1}, \\ 
+        Antônio Tadeu A. Gomes\inst{1}, Tiziano Labruzzo\inst{1,4}, Andrea Zerilli\inst{1,4}}
 
 \address{  Laboratório Nacional de Computação Científica (LNCC)\\
   Getúlio Vargas Av., 333, Quitandinha Petrópolis - RJ - Brasil
 \nextinstitute
-Universidade Católica de Petrópolis (UCP)\\
-  R. Barão do Amazonas, 124 - Centro, Petrópolis - RJ - Brasil
-\nextinstitute
   Centro Federal de Educação Tecnológica Celso Suckow da Fonseca (CEFET-FR) \\
   R. Gen. Canabarro, 485 - Maracanã, Rio de Janeiro - RJ - Brasil
-  \email{\{romulotl,facanha\}@lncc.br}
+\nextinstitute
+Universidade Católica de Petrópolis (UCP)\\
+  R. Barão do Amazonas, 124 - Centro, Petrópolis - RJ - Brasil  
+\nextinstitute
+Zlemlink Ltda \\
+Rua Taylor 39, sala 805, Rio de Janeiro-RJ - Brasil  
+  \email{\{facanha,romulotl,atagomes,tiziano\}@lncc.br}
 }
 
 \begin{document} 
@@ -40,17 +44,13 @@ Perfis de desempenho paralelos foram obtidos para uma implementação do método
 \section{Introdução}
 \label{sec:intro}
 %
-Neste trabalho é apresentado um estudo do perfil de desempenho paralelo realizado no supercomputador Santos Dumont, de uma implementação do método CSEM-Controlled-Source Electromagnetic (método Eletromagnético de Fonte Controlada, em tradução livre)\cite{zerilli2014broadband,zerilli2016broadband}, que consiste em uma técnica geofísica usada para explorar o subsolo em busca de reservas de petróleo e gás, bem como de outros recursos minerais. A técnica envolve o uso de uma fonte eletromagnética para produzir um sinal de baixa frequência, que é então detectado por sensores colocados no fundo do mar. O sinal pode penetrar nas camadas do solo e interagir com qualquer material condutor, como rochas contendo hidrocarbonetos, criando um campo eletromagnético secundário que é medido pelos sensores. Ao analisar a resposta do campo secundário, pode-se criar um modelo 3D da subsolo, a ser usado para identificar a localização e o tamanho de potenciais reservas de hidrocarbonetos e outras características geológicas.
+Neste trabalho é apresentado um estudo do perfil de desempenho paralelo realizado no supercomputador Santos Dumont, de uma implementação do método CSEM-Controlled-Source Electromagnetic (método Eletromagnético de Fonte Controlada, em tradução livre)\cite{zerilli2014broadband}, que consiste em uma técnica geofísica usada para explorar o subsolo em busca de reservas de petróleo e gás, bem como de outros recursos minerais. A técnica envolve o uso de uma fonte eletromagnética para produzir um sinal de baixa frequência, que é então detectado por sensores colocados no fundo do mar. O sinal pode penetrar nas camadas do solo e interagir com qualquer material condutor, como rochas contendo hidrocarbonetos, criando um campo eletromagnético secundário que é medido pelos sensores. Ao analisar a resposta do campo secundário, pode-se criar um modelo 3D da subsolo, a ser usado para identificar a localização e o tamanho de potenciais reservas de hidrocarbonetos e outras características geológicas.
 
 \section{Metodologia}
 \label{sec:metodo}
 %
-A fim de obter o perfil de desempenho do CSEM 3D, foram realizadas execuções paralelas no supercomputador Santos Dumont variando-se de 12 até 384 processos MPI, usando OpenMPI v4.1.2 instalado com compilador GNU v9.3, rodado sob o pacote HPCToolkit~\cite{hpctoolkit2010}, que é um conjunto de ferramentas com código-fonte aberto para análise de desempenho, projetado para ajudar os desenvolvedores a entender e otimizar o desempenho de aplicações em sistemas de computação de alto desempenho (HPC, do termo em inglês High-Performance Computing). O HPCToolkit suporta várias linguagens de programação, tais como C, C++ e Fortran, e é compatível com diferentes arquiteturas de hardware, como CPUs, GPUs e clusters de computadores, fornecendo diversos recursos para análise de desempenho, incluindo-se:
-\begin{itemize}
- \item \underline{Coleta de dados de desempenho} visando obter informações sobre o tempo de CPU, eventos de hardware, alocação de memória e outros dados relevantes para a análise de desempenho.
-  \item \underline{Análise de dados} para identificação dos gargalos de desempenho e oportunidades de otimização.
- \item \underline{Visualização do dados} de desempenho coletados em vários formatos.
-\end{itemize}
+A fim de obter o perfil de desempenho do CSEM 3D, foram realizadas execuções paralelas no supercomputador Santos Dumont variando-se de 12 até 384 processos MPI, usando OpenMPI v4.1.2 instalado com compilador GNU v9.3, rodado sob o pacote HPCToolkit~\cite{hpctoolkit2010}, que é um conjunto de ferramentas com código-fonte aberto para análise de desempenho, projetado para ajudar os desenvolvedores a entender e otimizar o desempenho de aplicações em sistemas de computação de alto desempenho (HPC, do termo em inglês High-Performance Computing). O HPCToolkit fornece diversos recursos para análise de desempenho, incluindo-se: \textbf{i) coleta de dados de desempenho} visando obter informações sobre o tempo de CPU, eventos de hardware, alocação de memória e outros dados relevantes para a análise de desempenho; \textbf{ii) análise de dados} para identificação dos gargalos de desempenho e oportunidades de otimização; \textbf{iii) visualização do dados} de desempenho coletados em vários formatos.
+
 
 \section{Resultados}              
 \label{sec:resultados}
